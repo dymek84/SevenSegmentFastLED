@@ -49,15 +49,15 @@ public:
 
     void sevenSegSetup(byte brightness = 20);
 
-    void setDigit(digitSeg current, int8_t digitNumber, uint8_t red, uint8_t green, uint8_t blue);
+    void setDigit(digitSeg current, int8_t digitNumber, CRGB color);
 
-    void setDotsRGB(uint8_t red = 255, uint8_t green = 255, uint8_t blue = 255); // Ignore does not work atm
+    void setDotsRGB(CRGB color); // Ignore does not work atm
 
-    void setStringRGB(uint16_t start, uint16_t to, uint8_t red, uint8_t green, uint8_t blue); // Sets any string of LEDs to the passed colour values
+    void setStringRGB(uint16_t start, uint16_t to, CRGB color); // Sets any string of LEDs to the passed colour values
 
     void setDigitsBlank();
 
-    void setAllDigitsX(digitSeg X, byte r = 255, byte g = 255, byte b = 255);
+    void setAllDigitsX(digitSeg X, CRGB color);
 
     void changeBrightness(byte bright = 255);
 
@@ -136,43 +136,36 @@ public:
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Colour Variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Custom Colour Creator:
-    // use savedColour Constructor to craete custom colours that can be passed to the display
-
-    struct savedColour
-    { // data structure to save named RGB values that could be passed to functions
-        uint8_t r;
-        uint8_t g;
-        uint8_t b;
-    };
+    // use CRGB Constructor to craete custom colours that can be passed to the display
 
     // Pick and Name Colours here, then add them to the colourArray to make them easily accessable
 
-    savedColour skyBlue = {0, 80, 255}; // Data structure for "skyroraBlue" colour as an RGB value
+    CRGB skyBlue = CRGB(0, 80, 255); // Data structure for "skyroraBlue" colour as an RGB value
 
-    savedColour pureBlue = {0, 0, 255};
+    CRGB pureBlue = CRGB(0, 0, 255);
 
-    savedColour offWhite = {160, 255, 200}; // data structure for an offwhite colour, all LEDs on max (these figures chave been calibrated to produce a cleaner white)
+    CRGB offWhite = CRGB(160, 255, 200); // data structure for an offwhite colour, all LEDs on max (these figures chave been calibrated to produce a cleaner white)
 
-    savedColour yellowOrange = {255, 160, 0}; // Holds Orange Colour as a nice contrast to the blue
+    CRGB yellowOrange = CRGB(255, 160, 0); // Holds Orange Colour as a nice contrast to the blue
 
-    savedColour blackout = {0, 0, 0}; // data structure holding "black" - all LEDS off.
+    CRGB blackout = CRGB(0, 0, 0); // data structure holding "black" - all LEDS off.
 
-    savedColour pureWhite = {255, 255, 255};
+    CRGB pureWhite = CRGB(255, 255, 255);
 
-    savedColour currentColour; // data structure to hold the current LED colour
+    CRGB currentColour; // data structure to hold the current LED colour
 
-    savedColour colourArray[4] = {skyBlue, offWhite, yellowOrange, pureWhite}; // array to hold different colour data structures. Makes it easy to cycle through them
+    CRGB colourArray[4] = {skyBlue, offWhite, yellowOrange, pureWhite}; // array to hold different colour data structures. Makes it easy to cycle through them
 
     uint8_t colourSelect = 0; // Variable to hold the current selected colour from colourArray
 
-    void changeColourRGB(byte red, byte green, byte blue);
-    void changeColourStruc(savedColour newColour);
+    void changeColourRGB(CRGB newColour);
+    void changeColourStruc(CRGB newColour);
+    void show();
+    void setDigit_colourName(digitSeg input, int8_t digitNum, CRGB inputColour);
+    void setDotsName(CRGB newColour);
+    void setStringName(uint16_t start, uint16_t to, CRGB newColour);
 
-    void setDigit_colourName(digitSeg input, int8_t digitNum, savedColour inputColour);
-    void setDotsName(savedColour newColour);
-    void setStringName(uint16_t start, uint16_t to, savedColour newColour);
-
-    void flyingDigit(digitSeg in, savedColour inputColour, uint32_t animationDelay = 100);
+    void flyingDigit(digitSeg in, CRGB inputColour, uint32_t animationDelay = 100);
 
     uint8_t currentBrightness;
 

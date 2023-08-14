@@ -12,45 +12,49 @@ void pixelSevenSegment::sevenSegSetup(byte brightness)
     currentBrightness = brightness;
 }
 
-void pixelSevenSegment::flyingDigit(digitSeg in, savedColour inputColour, uint32_t animationDelay)
+void pixelSevenSegment::flyingDigit(digitSeg in, CRGB inputColour, uint32_t animationDelay)
 {
     int iteration = 0; // this variable needs to be external
     pixelSevenSegment::setDigit_colourName(in, iteration, inputColour);
     iteration++;
 }
 
-void pixelSevenSegment::setAllDigitsX(digitSeg X, byte r, byte g, byte b)
+void pixelSevenSegment::setAllDigitsX(digitSeg X, CRGB color)
 {
 
-    pixelSevenSegment::setDigit(X, 0, r, g, b);
-    pixelSevenSegment::setDigit(X, 1, r, g, b);
-    pixelSevenSegment::setDigit(X, 2, r, g, b);
-    pixelSevenSegment::setDigit(X, 3, r, g, b);
-    pixelSevenSegment::setDigit(X, 4, r, g, b);
-    pixelSevenSegment::setDigit(X, 5, r, g, b);
+    pixelSevenSegment::setDigit(X, 0, color);
+    pixelSevenSegment::setDigit(X, 1, color);
+    pixelSevenSegment::setDigit(X, 2, color);
+    pixelSevenSegment::setDigit(X, 3, color);
+    pixelSevenSegment::setDigit(X, 4, color);
+    pixelSevenSegment::setDigit(X, 5, color);
 }
 
 void pixelSevenSegment::setDigitsBlank()
 { // Method to set all digits to black (off)
 
-    pixelSevenSegment::setDigit(alldigits[8], 0, 0, 0, 0); // Passed Arguments (digitSeg.bitarray, digitNumber, red, green, blue)
-    pixelSevenSegment::setDigit(alldigits[8], 1, 0, 0, 0); // Passed Arguments (digitSeg.bitarray, digitNumber, red, green, blue)
-    pixelSevenSegment::setDigit(alldigits[8], 2, 0, 0, 0); // Passed Arguments (digitSeg.bitarray, digitNumber, red, green, blue)
-    pixelSevenSegment::setDigit(alldigits[8], 3, 0, 0, 0); // Passed Arguments (digitSeg.bitarray, digitNumber, red, green, blue)
-    pixelSevenSegment::setDigit(alldigits[8], 4, 0, 0, 0); // Passed Arguments (digitSeg.bitarray, digitNumber, red, green, blue)
-    pixelSevenSegment::setDigit(alldigits[8], 5, 0, 0, 0); // Passed Arguments (digitSeg.bitarray, digitNumber, red, green, blue)
+    pixelSevenSegment::setDigit(alldigits[8], 0, CRGB::Black); // Passed Arguments (digitSeg.bitarray, digitNumber, red, green, blue)
+    pixelSevenSegment::setDigit(alldigits[8], 1, CRGB::Black); // Passed Arguments (digitSeg.bitarray, digitNumber, red, green, blue)
+    pixelSevenSegment::setDigit(alldigits[8], 2, CRGB::Black); // Passed Arguments (digitSeg.bitarray, digitNumber, red, green, blue)
+    pixelSevenSegment::setDigit(alldigits[8], 3, CRGB::Black); // Passed Arguments (digitSeg.bitarray, digitNumber, red, green, blue)
+    pixelSevenSegment::setDigit(alldigits[8], 4, CRGB::Black); // Passed Arguments (digitSeg.bitarray, digitNumber, red, green, blue)
+    pixelSevenSegment::setDigit(alldigits[8], 5, CRGB::Black); // Passed Arguments (digitSeg.bitarray, digitNumber, red, green, blue)
 }
-
+void pixelSevenSegment::show()
+{
+    FastLED.show();
+}
 // this function needs to be a method for a "digit" object but I couldn't work out how to do that.
 // This method is slightly more inelegent but it should work (UNTESTED with more than 1 digit but confident it will function)
 
-void pixelSevenSegment::setDigit_colourName(digitSeg input, int8_t digitNum, savedColour inputColour)
+void pixelSevenSegment::setDigit_colourName(digitSeg input, int8_t digitNum, CRGB inputColour)
 {
 
-    pixelSevenSegment::setDigit(input, digitNum, inputColour.r, inputColour.g, inputColour.b);
+    pixelSevenSegment::setDigit(input, digitNum, inputColour);
 }
 
-void pixelSevenSegment::setDigit(digitSeg current, int8_t digitNumber, uint8_t red, uint8_t green, uint8_t blue)
+void pixelSevenSegment::
+    setDigit(digitSeg current, int8_t digitNumber, CRGB color)
 { // This function sets the first digit based on the data structure passed to it.
 
     // A new instance of digitSeg has been set up ready to take whatever data is placed into it
@@ -66,7 +70,7 @@ void pixelSevenSegment::setDigit(digitSeg current, int8_t digitNumber, uint8_t r
 
     if (current.A)
     {
-        ledString((s + q), (s + LED_PER_SEG + q - 1)) = CRGB(red, green, blue);
+        ledString((s + q), (s + LED_PER_SEG + q - 1)) = color;
     }
     else
     {
@@ -77,7 +81,7 @@ void pixelSevenSegment::setDigit(digitSeg current, int8_t digitNumber, uint8_t r
 
     if (current.B)
     {
-        ledString((s + q), (s + LED_PER_SEG + q - 1)) = CRGB(red, green, blue);
+        ledString((s + q), (s + LED_PER_SEG + q - 1)) = color;
     }
     else
     {
@@ -88,7 +92,7 @@ void pixelSevenSegment::setDigit(digitSeg current, int8_t digitNumber, uint8_t r
 
     if (current.C)
     {
-        ledString((s + q), (s + LED_PER_SEG + q - 1)) = CRGB(red, green, blue);
+        ledString((s + q), (s + LED_PER_SEG + q - 1)) = color;
     }
     else
     {
@@ -99,7 +103,7 @@ void pixelSevenSegment::setDigit(digitSeg current, int8_t digitNumber, uint8_t r
 
     if (current.D)
     {
-        ledString((s + q), (s + LED_PER_SEG + q - 1)) = CRGB(red, green, blue);
+        ledString((s + q), (s + LED_PER_SEG + q - 1)) = color;
     }
     else
     {
@@ -110,7 +114,7 @@ void pixelSevenSegment::setDigit(digitSeg current, int8_t digitNumber, uint8_t r
 
     if (current.E)
     {
-        ledString((s + q), (s + LED_PER_SEG + q - 1)) = CRGB(red, green, blue);
+        ledString((s + q), (s + LED_PER_SEG + q - 1)) = color;
     }
     else
     {
@@ -121,7 +125,7 @@ void pixelSevenSegment::setDigit(digitSeg current, int8_t digitNumber, uint8_t r
 
     if (current.F)
     {
-        ledString((s + q), (s + LED_PER_SEG + q - 1)) = CRGB(red, green, blue);
+        ledString((s + q), (s + LED_PER_SEG + q - 1)) = color;
     }
     else
     {
@@ -132,7 +136,7 @@ void pixelSevenSegment::setDigit(digitSeg current, int8_t digitNumber, uint8_t r
 
     if (current.G)
     {
-        ledString((s + q), (s + LED_PER_SEG + q - 1)) = CRGB(red, green, blue);
+        ledString((s + q), (s + LED_PER_SEG + q - 1)) = color;
     }
     else
     {
@@ -144,15 +148,15 @@ void pixelSevenSegment::setDigit(digitSeg current, int8_t digitNumber, uint8_t r
 
 //  (LED_PER_SEG * 7)* 6 to ((LED_PER_SEG * 7)* 6) + 4
 
-void pixelSevenSegment::setDotsRGB(uint8_t red, uint8_t green, uint8_t blue)
+void pixelSevenSegment::setDotsRGB(CRGB color)
 {
 
     int16_t d = (LEDS_IN_TPLUS + (LED_PER_SEG * 7) * 6);
 
-    ledString(d, (d + 4)) = CRGB(red, green, blue);
+    ledString(d, (d + 4)) = color;
 }
 
-void pixelSevenSegment::setDotsName(savedColour newColour)
+void pixelSevenSegment::setDotsName(CRGB newColour)
 {
 
     int16_t d = (LEDS_IN_TPLUS + (LED_PER_SEG * 7) * 6);
@@ -160,25 +164,23 @@ void pixelSevenSegment::setDotsName(savedColour newColour)
     ledString(d, (d + 4)) = CRGB(newColour.r, newColour.g, newColour.b);
 }
 
-void pixelSevenSegment::setStringRGB(uint16_t start, uint16_t to, uint8_t red, uint8_t green, uint8_t blue)
+void pixelSevenSegment::setStringRGB(uint16_t start, uint16_t to, CRGB color)
 {
-    ledString(start, to) = CRGB(red, green, blue);
+    ledString(start, to) = color;
 }
 
-void pixelSevenSegment::setStringName(uint16_t start, uint16_t to, savedColour newColour)
+void pixelSevenSegment::setStringName(uint16_t start, uint16_t to, CRGB newColour)
 {
     ledString(start, to) = CRGB(newColour.r, newColour.g, newColour.b);
 }
 
-void pixelSevenSegment::changeColourRGB(byte red, byte green, byte blue)
+void pixelSevenSegment::changeColourRGB(CRGB newColour)
 {
 
-    currentColour.r = red;
-    currentColour.g = green;
-    currentColour.b = blue;
+    currentColour = newColour;
 }
 
-void pixelSevenSegment::changeColourStruc(savedColour newColour)
+void pixelSevenSegment::changeColourStruc(CRGB newColour)
 {
 
     currentColour = newColour;
